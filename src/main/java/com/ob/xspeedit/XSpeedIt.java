@@ -67,13 +67,11 @@ public class XSpeedIt {
         Carton carton=new Carton();
         while (nbIsPacked < articles.size()) {
             for (Article article : articles) {
-                if (!article.isPacked) {
-                    if (carton.placeRestante - article.poids >= 0) {
-                        carton.placeRestante -= article.poids;
-                        carton.remplissage += ""+article.poids;
-                        article.isPacked = true;
-                        nbIsPacked++;
-                    }
+                if (!article.isPacked && carton.placeRestante - article.poids >= 0) {
+                    carton.placeRestante -= article.poids;
+                    carton.remplissage += ""+article.poids;
+                    article.isPacked = true;
+                    nbIsPacked++;
                 }
             }
             result.add(carton);
@@ -116,7 +114,7 @@ public class XSpeedIt {
         ArrayList<Carton> result = new ArrayList<>();
 
         //chaque article dans un carton
-        ArrayList<Carton> cartons = new ArrayList<Carton>();
+        ArrayList<Carton> cartons = new ArrayList<>();
         for(Article article:articles){
             cartons.add(new Carton(article));
         }
@@ -147,7 +145,6 @@ public class XSpeedIt {
             index++;
         }
 
-        int nbCartons = 0;
         for(Carton carton:cartons){
             //on élimine les cartons vides
             if (carton.placeRestante<Constantes.MAX_CAPACITE){
@@ -165,7 +162,7 @@ public class XSpeedIt {
      * @return
      */
     public List<Article> transformerStringEnListeArticles(String items){
-        ArrayList<Article> chars = new ArrayList<Article>();
+        ArrayList<Article> chars = new ArrayList<>();
         for (char c : items.toCharArray()) {
             chars.add(new Article(Integer.parseInt(String.valueOf(c))));
         }
